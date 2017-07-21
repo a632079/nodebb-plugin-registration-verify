@@ -3,6 +3,7 @@
 
 $(function () {
     $(window).on('action:ajaxify.end', function (data) {
+        console.log(utils.param('error'));
         if (data.url === 'register' && utils.param('error') === 'wrong-code') {
             console.log("wrong-code");
             require(['translator'], function (translator) {

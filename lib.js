@@ -129,7 +129,7 @@ plugin.addCaptcha = function (params, callback) {
     width: (meta.config['v-code:width'])? meta.config['v-code:width']: 100,
     height: (meta.config['v-code:height'])? meta.config['v-code:height']: 40,
     leng: (meta.config['v-code:leng'])? meta.config['v-code:leng']: 4
-  }
+  };
   var v_code = Generate(settings);
   params.req.session.vcode = v_code.code;
   //console.log(params.req.session);
