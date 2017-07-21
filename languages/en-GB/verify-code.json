@@ -1,0 +1,14 @@
+{
+    "admin-width-label":"Code Image Width",
+    "admin-height-label":"Code Image Height",
+    "admin-info":"This is a local verification code plugin, you can adjust the verification code by setting the following settings.",
+    "admin-info-beta":"This is a test plugin, the function is not yet complete (no ajax check, no click-to-reload). ",
+    "admin-length-label":"Code Image Lenght",
+    "admin-width-placeholder":"width e.g 100(.px)",
+    "admin-height-placeholder":"height e.g 40(.px)",
+    "admin-length-placeholder":"length e.g 4(.px)",
+    "admin-save":"Save",
+    "register-label":"Verification Code",
+    "register-placeholder":"Please enter Verification Code..",
+    "client-wrong-code":"Your verification code is incorrect. Please refresh the page to try again!"
+}

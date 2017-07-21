@@ -1,0 +1,14 @@
+{
+    "admin-width-label":"验证码宽度",
+    "admin-height-label":"验证码高度",
+    "admin-info":"这是一个本地验证码插件，你可以通过下方的设置改变验证码生产时的参数。",
+    "admin-info-beta":"这是一个测试插件，功能尚不完全（无ajax检验支持，无点击刷新支持）。如果出现问题，请及时反馈。",
+    "admin-length-label":"验证码长度",
+    "admin-width-placeholder":"宽度 e.g 100(.px)",
+    "admin-height-placeholder":"高度 e.g 40(.px)",
+    "admin-length-placeholder":"长度 e.g 4 位",
+    "admin-save":"保存",
+    "register-label":"验证码",
+    "register-placeholder":"请输入验证码",
+    "client-wrong-code":"您输入的验证码错误。请刷新页面以重试！"
+}
