@@ -25,6 +25,6 @@
 		"static/lib/main.js"
 	],
     "languages": "languages",
-    "defaultLang": "es",
+    "defaultLang": "en-GB",
 	"templates": "static/templates"
 }
