@@ -24,5 +24,7 @@
 	"scripts": [
 		"static/lib/main.js"
 	],
+    "languages": "languages",
+    "defaultLang": "es",
 	"templates": "static/templates"
 }

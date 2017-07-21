@@ -101,6 +101,7 @@ function Generate() {
 //Main
 var plugin = {},
   meta = module.parent.require('./meta');
+var translator = require.main.require('./public/src/modules/translator');
 
 plugin.init = function (params, callback) {
   var app = params.router,
@@ -128,8 +129,8 @@ plugin.addCaptcha = function (params, callback) {
   params.req.session.vcode = v_code.code;
   console.log(params.req.session);
   var ret = {
-    label: '验证码',
-    html: '<div class="well"><input class="form-control" name="verify-code" id="verify-code" placeholder="请输入验证码..." style="width:auto;display:inline-block" /><img style="float:right;display:inline-block;" src="' + v_code.dataURL + '"/></div>'
+    label: '[[verify-code:register-label]]',
+    html: '<div class="well"><input class="form-control" name="verify-code" id="verify-code" placeholder="[[verify-code:register-placeholder]]" style="width:auto;display:inline-block" /><img style="float:right;display:inline-block;" src="' + v_code.dataURL + '"/></div>'
   };
 
   if (params.templateData.regFormEntry && Array.isArray(params.templateData.regFormEntry)) {
