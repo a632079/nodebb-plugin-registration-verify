@@ -8,12 +8,12 @@
 	</p><br />
 	<div>
 		<p>
-			<label for="Width">[[verify-code:admin-width-label]]verify-code</label>
-			<input type="text" data-field="v-code:width" title="Width" class="form-control" placeholder="[[admin-width-placeholder]]"><br />
-			<label for="Height">[[verify-code:admin-height-label]]verify-code</label>
-			<input type="text" data-field="v-code:height" title="Height" class="form-control" placeholder="[[admin-height-placeholder]]">
-            <label for="Length">[[verify-code:admin-length-label]]verify-code</label>
-			<input type="text" data-field="v-code:leng" title="Length" class="form-control" placeholder="[[admin-length-placeholder]]">
+			<label for="Width">[[verify-code:admin-width-label]]</label>
+			<input type="text" data-field="v-code:width" title="Width" class="form-control" placeholder="[[verify-code:admin-width-placeholder]]"><br />
+			<label for="Height">[[verify-code:admin-height-label]]</label>
+			<input type="text" data-field="v-code:height" title="Height" class="form-control" placeholder="[[verify-code:admin-height-placeholder]]">
+            <label for="Length">[[verify-code:admin-length-label]]</label>
+			<input type="text" data-field="v-code:leng" title="Length" class="form-control" placeholder="[[verify-code:admin-length-placeholder]]">
 		</p>
 	</div>
 </form>
