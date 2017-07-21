@@ -1,0 +1,34 @@
+{
+  "name": "nodebb-plugin-registration-verify",
+  "version": "0.0.8",
+  "description": "A plugin that requires visitors to fill in the verification code when registering.",
+  "main": "lib.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodebb",
+    "plugin",
+    "registration",
+    "spam"
+  ],
+  "author": {
+    "name": "a632079",
+    "email": "a632079@qq.com"
+  },
+  "bugs": {
+    "url": "https://github.com/a632079/nodebb-plugin-registration-verify/issues"
+  },
+  
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/a632079/nodebb-plugin-registration-verify"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "canvas": "^1.6.5"
+  },
+  "nbbpm": {
+    "compatibility": "^1.5.0"
+  }
+}

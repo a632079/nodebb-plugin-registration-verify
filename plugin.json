@@ -1,0 +1,28 @@
+{
+	"id": "nodebb-plugin-registration-verify",
+	"name": "Registration Verify Code",
+	"description": "A plugin that requires visitors to fill in the verification code when registering.",
+	"url": "https://github.com/a632079/nodebb-plugin-registration-verify.git",
+	"library": "./lib.js",
+	"hooks": [
+		{
+			"hook": "static:app.load", "method": "init"
+		},
+		{
+			"hook": "filter:admin.header.build", "method": "addAdminNavigation"
+		},
+		{
+			"hook": "filter:register.build", "method": "addCaptcha"
+		},
+		{
+			"hook": "filter:register.check", "method": "checkRegister"
+		}
+	],
+	"staticDirs": {
+		"static": "./static"
+	},
+	"scripts": [
+		"static/lib/main.js"
+	],
+	"templates": "static/templates"
+}
