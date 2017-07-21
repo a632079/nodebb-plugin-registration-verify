@@ -40,9 +40,9 @@ function uuid(len, radix) {
 
   return uuid.join('');
 }
-function Generate() {
-  var W = 100;
-  var H = 40;
+function Generate(settings) {
+  var W = settings.width;
+  var H = settings.height;
   var canvas = new Canvas(W, H);
   var ctx = canvas.getContext('2d');
   var items = uuid(4, 16).toUpperCase().split('');
@@ -53,14 +53,14 @@ function Generate() {
   ctx.globalAlpha = .8;
   ctx.font = '15px sans-serif';
 
-  for (var i = 0; i < 4; i++) {
+  for (var i = 0; i < settings.leng; i++) {
     ctx.fillStyle = 'rgb(' + randInt(150, 225) + ',' + randInt(150, 225) + ',' + randInt(150, 225) + ')';
     ctx.fillText(items[randInt(0, items.length)], randFloat(-10, W + 10), randFloat(-10, H + 10));
   }
 
   var color = 'rgb(' + randInt(1, 120) + ',' + randInt(1, 120) + ',' + randInt(1, 120) + ')';
   ctx.font = 'bold 30px sans-serif';
-  for (var i = 0; i < 4; i++) {
+  for (var i = 0; i < settings.leng; i++) {
     var j = randInt(0, items.length);
     ctx.fillStyle = color;
     ctx.fillText(items[j], 5 + i * 23, 25);
@@ -125,9 +125,14 @@ plugin.addAdminNavigation = function (header, callback) {
 };
 
 plugin.addCaptcha = function (params, callback) {
-  var v_code = Generate();
+  var settings = {
+    width: (meta.config['v-code:width'])? meta.config['v-code:width']: 100,
+    height: (meta.config['v-code:height'])? meta.config['v-code:height']: 40,
+    leng: (meta.config['v-code:leng'])? meta.config['v-code:leng']: 4
+  }
+  var v_code = Generate(settings);
   params.req.session.vcode = v_code.code;
-  console.log(params.req.session);
+  //console.log(params.req.session);
   var ret = {
     label: '[[verify-code:register-label]]',
     html: '<div class="well"><input class="form-control" name="verify-code" id="verify-code" placeholder="[[verify-code:register-placeholder]]" style="width:auto;display:inline-block" /><img style="float:right;display:inline-block;" src="' + v_code.dataURL + '"/></div>'
