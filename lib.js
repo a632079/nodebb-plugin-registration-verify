@@ -45,7 +45,7 @@ function Generate(settings) {
   var H = settings.height;
   var canvas = new Canvas(W, H);
   var ctx = canvas.getContext('2d');
-  var items = uuid(4, 16).toUpperCase().split('');
+  var items = uuid(settings.leng, 16).toUpperCase().split('');
   var vcode = '';
 
   ctx.fillStyle = '#f3fbfe';
