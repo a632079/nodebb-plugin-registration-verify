@@ -143,12 +143,23 @@ plugin.addCaptcha = function (params, callback) {
     leng: (meta.config['v-code:leng']) ? meta.config['v-code:leng'] : 4
   };
   var v_code = Generate(settings);
+  var MobileDetect = require('mobile-detect'),
+    md = new MobileDetect(req.headers['user-agent']);
   params.req.session.vcode = v_code.code;
   //console.log(params.req.session);
-  var ret = {
-    label: '[[verify-code:register-label]]',
-    html: '<div class="well"><input class="form-control" name="verify-code" id="verify-code" placeholder="[[verify-code:register-placeholder]]" style="width:auto;display:inline-block" /><img style="float:right;display:inline-block;" src="' + v_code.dataURL + '"/></div>'
-  };
+  if (!md.mobile) {
+    var ret = {
+      label: '[[verify-code:register-label]]',
+      html: '<div class="well"><input class="form-control" name="verify-code" id="verify-code" placeholder="[[verify-code:register-placeholder]]" style="width:auto;display:inline-block" /><img style="float:right;display:inline-block;" src="' + v_code.dataURL + '"/></div>'
+    };
+  } else {
+    //mobile friendly
+    var ret = {
+      label: '[[verify-code:register-label]]',
+      html: '<div class="well"><input class="form-control" name="verify-code" id="verify-code" placeholder="[[verify-code:register-placeholder]]" style="width:auto;display:inline-block;padding:5px;" /><img style="float:right;display:inline-block;" src="' + v_code.dataURL + '"/></div>'
+    };
+  }
+
 
   if (params.templateData.regFormEntry && Array.isArray(params.templateData.regFormEntry)) {
     params.templateData.regFormEntry.push(ret);

@@ -1,6 +1,6 @@
 {
   "name": "nodebb-plugin-registration-verify",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "A plugin that requires visitors to fill in the verification code when registering.",
   "main": "lib.js",
   "scripts": {
@@ -26,7 +26,8 @@
   },
   "license": "ISC",
   "dependencies": {
-    "canvas": "^1.6.5"
+    "canvas": "^1.6.5",
+    "mobile-detect":"1.3.6"
   },
   "nbbpm": {
     "compatibility": "^1.5.0"
