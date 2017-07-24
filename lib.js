@@ -60,10 +60,22 @@ function Generate(settings) {
 
   var color = 'rgb(' + randInt(1, 120) + ',' + randInt(1, 120) + ',' + randInt(1, 120) + ')';
   ctx.font = 'bold 30px sans-serif';
+  var t = 0;
   for (var i = 0; i < settings.leng; i++) {
     var j = randInt(0, items.length);
     ctx.fillStyle = color;
-    ctx.fillText(items[j], 5 + i * 23, 25);
+    if ((H - (5 + i * 23)) < 15 && t == 0) {
+      t = 1;
+      ctx.fillText(items[j], 5 - i * 23, 25);
+    } else if (((5 + i * 23) - H) < -15 && t == 1) {
+      ctx.fillText(items[j], 5 + i * 23, 25);
+      t = 0;
+    } else if (t == 1) {
+      ctx.fillText(items[j], 5 + i * 23, 25);
+    } else if (t == 0) {
+      ctx.fillText(items[j], 5 - i * 23, 25);
+    }
+
     var a = randFloat(0.85, 1.0);
     var b = randFloat(-0.04, 0);
     var c = randFloat(-0.3, 0.3);
@@ -126,9 +138,9 @@ plugin.addAdminNavigation = function (header, callback) {
 
 plugin.addCaptcha = function (params, callback) {
   var settings = {
-    width: (meta.config['v-code:width'])? meta.config['v-code:width']: 100,
-    height: (meta.config['v-code:height'])? meta.config['v-code:height']: 40,
-    leng: (meta.config['v-code:leng'])? meta.config['v-code:leng']: 4
+    width: (meta.config['v-code:width']) ? meta.config['v-code:width'] : 100,
+    height: (meta.config['v-code:height']) ? meta.config['v-code:height'] : 40,
+    leng: (meta.config['v-code:leng']) ? meta.config['v-code:leng'] : 4
   };
   var v_code = Generate(settings);
   params.req.session.vcode = v_code.code;
