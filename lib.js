@@ -6,16 +6,21 @@ var Canvas = module.require('canvas');
 var randFloat = function (start, end) {
   return start + Math.random() * (end - start);
 };
-function randColor(min,max){
-    var r = randInt(min,max);
-    var g = randInt(min,max);
-    var b = randInt(min,max);
-    return "rgb("+r+","+g+","+b+")";
-  }
+function randColor(min, max) {
+  var r = randInt(min, max);
+  var g = randInt(min, max);
+  var b = randInt(min, max);
+  return "rgb(" + r + "," + g + "," + b + ")";
+}
 /*
  * get random integer value amount [start, end)
  */
 var randInt = function (start, end) {
+  if(end > start){
+    var mid = end;
+    end = start;
+    start = end;
+  }
   return Math.floor(Math.random() * (end - start)) + start;
 }
 function uuid(len, radix) {
@@ -54,8 +59,10 @@ function Generate(settings) {
   var items = uuid(settings.leng, 16).toUpperCase().split('');
   var vcode = '';
 
+  //set backgroud
   ctx.fillStyle = '#f3fbfe';
   ctx.fillRect(0, 0, W, H);
+
   ctx.globalAlpha = .8;
   ctx.font = '15px sans-serif';
 
@@ -67,24 +74,24 @@ function Generate(settings) {
 
   //generate vcode
   var color = 'rgb(' + randInt(1, 120) + ',' + randInt(1, 120) + ',' + randInt(1, 120) + ')';
-  ctx.font = 'bold 30px sans-serif';
+  ctx.font = 'bold ' + settings.font_size + 'px ' + settings.font_style;
   for (var i = 0; i < settings.leng; i++) {
     ctx.fillStyle = color;
     //Font rotation
-    var x = 5 + i * 23;
-    var y = randInt(5,H - 5);
+    var x = 5 + i * (setting.font_size * 0.8);
+    var y = randInt(H * 0.4, H - settings.font_size);
     var deg = randInt(-45, 45);
     //change x,y & deg
-    ctx.translate(x,y);
-    ctx.rotate(deg*Math.PI/180);
-    ctx.fillText(items[i], 0,0);
+    ctx.translate(x, y);
+    ctx.rotate(deg * Math.PI / 180);
+    ctx.fillText(items[i], 0, 0);
     //recover x,y & deg
-    ctx.rotate(-deg*Math.PI/180);
-    ctx.translate(-x,-y);
+    ctx.rotate(-deg * Math.PI / 180);
+    ctx.translate(-x, -y);
 
     vcode += items[i];
   }
-  
+
   //generate line
   ctx.beginPath();
   ctx.strokeStyle = color;
@@ -103,13 +110,14 @@ function Generate(settings) {
   }
   ctx.closePath();
   ctx.stroke();
+
   //generate point
-  for(var i=0; i<100; i++){
-      ctx.fillStyle = randColor(0,255);
-      ctx.beginPath();
-      ctx.arc(randInt(0,settings.width),randInt(0,settings.height), 1, 0, 2*Math.PI);
-      ctx.fill();
-    }
+  for (var i = 0; i < settings.point; i++) {
+    ctx.fillStyle = randColor(0, 255);
+    ctx.beginPath();
+    ctx.arc(randInt(0, settings.width), randInt(0, settings.height), 1, 0, 2 * Math.PI);
+    ctx.fill();
+  }
   let ret = {
     code: vcode.toLowerCase(),
     dataURL: canvas.toDataURL()
@@ -149,21 +157,25 @@ plugin.addCaptcha = function (params, callback) {
   var settings = {
     width: (meta.config['v-code:width']) ? meta.config['v-code:width'] : 100,
     height: (meta.config['v-code:height']) ? meta.config['v-code:height'] : 40,
-    leng: (meta.config['v-code:leng']) ? meta.config['v-code:leng'] : 4
+    leng: (meta.config['v-code:leng']) ? meta.config['v-code:leng'] : 4,
+    point: (meta.config['v-code:point']) ? meta.config['v-code:point'] : 100,
+    font_size: (meta.config['v-code:font_sizet']) ? meta.config['v-code:font_size'] : "30",
+    font_style: (meta.config['v-code:font_style']) ? meta.config['v-code:font_style'] : "sans-serif" 
   };
   var v_code = Generate(settings);
   var MobileDetect = require('mobile-detect'),
     md = new MobileDetect(params.req.headers['user-agent']);
   params.req.session.vcode = v_code.code;
   //console.log(params.req.session);
+  var ret;
   if (!md.mobile) {
-    var ret = {
+    ret = {
       label: '[[verify-code:register-label]]',
       html: '<div class="well"><input class="form-control" name="verify-code" id="verify-code" placeholder="[[verify-code:register-placeholder]]" style="width:auto;display:inline-block" /><img style="float:right;display:inline-block;" src="' + v_code.dataURL + '"/></div>'
     };
   } else {
     //mobile friendly
-    var ret = {
+    ret = {
       label: '[[verify-code:register-label]]',
       html: '<div class="well"><input class="form-control" name="verify-code" id="verify-code" placeholder="[[verify-code:register-placeholder]]" style="width:auto;display:inline-block;padding:5px;" /><img style="float:right;display:inline-block;" src="' + v_code.dataURL + '"/></div>'
     };
