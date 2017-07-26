@@ -4,6 +4,11 @@ var Canvas = module.require('canvas');
  * get random float value amount [start, end)
  */
 var randFloat = function (start, end) {
+  if (end < start) {
+    var mid = end;
+    end = start;
+    start = mid;
+  }
   return start + Math.random() * (end - start);
 };
 function randColor(min, max) {
@@ -16,10 +21,10 @@ function randColor(min, max) {
  * get random integer value amount [start, end)
  */
 var randInt = function (start, end) {
-  if(end > start){
+  if (end < start) {
     var mid = end;
     end = start;
-    start = end;
+    start = mid;
   }
   return Math.floor(Math.random() * (end - start)) + start;
 }
@@ -56,17 +61,17 @@ function Generate(settings) {
   var H = settings.height;
   var canvas = new Canvas(W, H);
   var ctx = canvas.getContext('2d');
-  var items = uuid(settings.leng, 16).toUpperCase().split('');
+  var items = uuid(settings.leng, 16).split('');
   var vcode = '';
 
-  //set backgroud
+  //set background
   ctx.fillStyle = '#f3fbfe';
   ctx.fillRect(0, 0, W, H);
 
   ctx.globalAlpha = .8;
   ctx.font = '15px sans-serif';
 
-  //generate backgroud font
+  //generate background font
   for (var i = 0; i < settings.leng; i++) {
     ctx.fillStyle = 'rgb(' + randInt(150, 225) + ',' + randInt(150, 225) + ',' + randInt(150, 225) + ')';
     ctx.fillText(items[randInt(0, items.length)], randFloat(-10, W + 10), randFloat(-10, H + 10));
@@ -78,8 +83,10 @@ function Generate(settings) {
   for (var i = 0; i < settings.leng; i++) {
     ctx.fillStyle = color;
     //Font rotation
-    var x = 5 + i * (setting.font_size * 0.8);
-    var y = randInt(H * 0.4, H - settings.font_size);
+    var x = (settings.font_size * 0.3) + i * (settings.font_size * 0.8);
+    var y = randInt(settings.font_size - 10, H);
+    //var y = 50;
+    console.log(x, y);
     var deg = randInt(-45, 45);
     //change x,y & deg
     ctx.translate(x, y);
@@ -122,6 +129,7 @@ function Generate(settings) {
     code: vcode.toLowerCase(),
     dataURL: canvas.toDataURL()
   };
+  console.log(ret);
   return ret;
 };
 
@@ -159,9 +167,11 @@ plugin.addCaptcha = function (params, callback) {
     height: (meta.config['v-code:height']) ? meta.config['v-code:height'] : 40,
     leng: (meta.config['v-code:leng']) ? meta.config['v-code:leng'] : 4,
     point: (meta.config['v-code:point']) ? meta.config['v-code:point'] : 100,
-    font_size: (meta.config['v-code:font_sizet']) ? meta.config['v-code:font_size'] : "30",
-    font_style: (meta.config['v-code:font_style']) ? meta.config['v-code:font_style'] : "sans-serif" 
+    font_size: (meta.config['v-code:font_size']) ? meta.config['v-code:font_size'] : "30",
+    font_style: (meta.config['v-code:font_style']) ? meta.config['v-code:font_style'] : "sans-serif"
   };
+
+
   var v_code = Generate(settings);
   var MobileDetect = require('mobile-detect'),
     md = new MobileDetect(params.req.headers['user-agent']);

@@ -22,7 +22,7 @@
 			<input type="text" data-field="v-code:point" title="Point Number" class="form-control" placeholder="[[verify-code:admin-point-num-e]]">
 			<label for="Length">[[verify-code:admin-line-num]]</label>
 			<input type="text" data-field="v-code:line_num" title="Line Number" class="form-control" placeholder="[[verify-code:admin-line-num-e]]">
-			<label for="Length">[[verify-code:admin-line-style]]</label
+			<label for="Length">[[verify-code:admin-line-style]]</label>
 			<input type="text" data-field="v-code:line_style" title="Line Style" class="form-control" placeholder="[[verify-code:admin-line-style-e]]">
 		</p>
 	</div>
