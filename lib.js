@@ -59,7 +59,7 @@ function uuid(len, radix) {
 function Generate(settings) {
   var W = settings.width;
   var H = settings.height;
-  var canvas = new Canvas(W, H);
+  var canvas = Canvas.createCanvas(W, H);
   var ctx = canvas.getContext('2d');
   var items = uuid(settings.leng, 16).split('');
   var vcode = '';
